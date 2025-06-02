@@ -1,30 +1,27 @@
-# 0. Import Libraries
 import yfinance as yf
 from datetime import datetime
 import matplotlib.pyplot as plt
 from prophet import Prophet
 import pandas as pd
+from rich.prompt import Prompt
 
-# 1. Set information and Get Data
-id = input("ID of Stock: ")
-start = datetime(int(input("Start Year: ")), int(input("Start Month: ")), int(input("Start Day(s): ")))
+id = Prompt.ask("ID of Stock")
+start = datetime(int(Prompt.ask("Start Year")), int(Prompt.ask("Start Month")), int(Prompt.ask("Start Day(s)")))
 end = datetime.now()
 df = yf.download(id, start=start, end=end)
 
-# Prepare data for Prophet
 df.reset_index(inplace=True)
 df = df[['Date', 'Close']]
 df.rename(columns={'Date': 'ds', 'Close': 'y'}, inplace=True)
 
-# 2. Initialize and fit the model
 model = Prophet()
 model.fit(df)
 
-# 3. Make future dataframe and predict
-future = model.make_future_dataframe(periods=1460)  # Forecasting for 4 years into the future
+predictdays = int(Prompt.ask("Count of Days to Predict"))
+
+future = model.make_future_dataframe(periods=predictdays)
 forecast = model.predict(future)
 
-# 4. Visualize the forecast
 fig, ax = plt.subplots(figsize=(14, 7))
 ax.plot(df['ds'], df['y'], label='Historical Data', color='blue')
 ax.plot(forecast['ds'], forecast['yhat'], label='Forecast', color='orange')
