@@ -1,4 +1,5 @@
-![thumbnail-21-zeta-future](https://github.com/user-attachments/assets/430135a5-98a7-43d3-913e-e62b87c18b2e)
+
+<img width="1920" height="1080" alt="Zeta Header Rounded" src="https://github.com/user-attachments/assets/56e8680d-5e7d-4fb3-a08f-a9bc0af712b5" />
 
 # Zeta-SPP
 Zeta in SPP (Stock Price Prediction)
